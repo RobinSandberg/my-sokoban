@@ -1,0 +1,40 @@
+    .myrow {
+	    width: 684px;
+	}
+	.box {
+		width: 36px;
+		height: 36px;
+		float: left;
+	}
+	#mapzone {
+		width: 684px;
+		height: 576;
+		float: left;
+	}
+	.b{
+		/* background-image: url("sheep.png"); */
+		border:10px solid red;
+	}
+	.w {
+		/* background-image: url("fence.png"); */
+		background-color: green;
+	}
+	.g {
+		/* background-image: url("grass.jpg"); */
+		background-color: blue;
+		/* <!-- width: 16px; --> */
+		/* <!-- height: 16px; --> */
+		/* <!-- margin:10px; --> */
+	}
+	.p {
+		border:10px solid yellow;
+		/* background-image: url("werewolf.png"); */
+	}
+	.g.b {
+		/* background-image: url("grasssheep2.png"); */
+		background-color: purple;
+	}
+	.g.p {
+		/* background-image: url("grasswolf.png"); */
+		background-color: yellow;
+	}
