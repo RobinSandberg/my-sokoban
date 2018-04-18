@@ -13,37 +13,29 @@
 		background-color: black;
 	}
 	.b{
-		background-image: url("sheep.png");
-		/* border:10px solid red; */
+		/* background-image: url("sheep.png"); */
+		border:10px solid red;
 	}
 	.w {
-		background-image: url("fence.png");
-		/* background-color: green; */
+		/* background-image: url("fence.png"); */
+		background-color: green;
 	}
 	.g {
-		background-image: url("grass.jpg");
-		/* background-color: blue; */
+		/* background-image: url("grass.jpg"); */
+		background-color: blue;
 		/* <!-- width: 16px; --> */
 		/* <!-- height: 16px; --> */
 		/* <!-- margin:10px; --> */
 	}
 	.p {
-		/* border:10px solid yellow; */
-		background-image: url("werewolf.png");
+		border:10px solid yellow;
+		/* background-image: url("werewolf.png"); */
 	}
 	.g.b {
-		background-image: url("grasssheep2.png");
-		/* background-color: purple; */
+		/* background-image: url("grasssheep2.png"); */
+		background-color: purple;
 	}
 	.g.p {
-		background-image: url("grasswolf.png");
-		/* background-color: purple; */
-	}
-	.h {
-		background-image: url("hunter.png");
-		/* border:10px solid white; */
-	}
-	.g.h {
-		background-image: url("grasshunter.png");
-		/* background-color: purple; */
+		/* background-image: url("grasswolf.png"); */
+		background-color: purple;
 	}

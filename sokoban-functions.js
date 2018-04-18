@@ -59,7 +59,7 @@ function Map()
 			// console.log(goalSet);
 			// console.log(goal);
 			document.removeEventListener("keydown", Moving)	
-			document.getElementById("screen").innerHTML = "<h1>You ate all the sheeps</h1>";
+			document.getElementById("screen").innerHTML = "<h1>You completed the game</h1>";
 		}
 		return true;
            
