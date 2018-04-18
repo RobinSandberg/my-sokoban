@@ -38,7 +38,10 @@ function Map()
 		var goal = document.getElementsByClassName("box g");
 		var goalSet = document.getElementsByClassName("box g b");
 		    // console.log(goal);
-			
+			if(goal.length == 0)
+			{
+				return false;
+			}
 		for(var i = 0; i < goal.length; i++)
 		{    
 			if (goal[i].classList.contains("b"))
@@ -53,7 +56,10 @@ function Map()
 			
 		if(goalSet.length == goal.length)
 		{
-			document.getElementById("mapzone").innerHTML = "<h1>You ate all the sheeps</h1>";
+			// console.log(goalSet);
+			// console.log(goal);
+			document.removeEventListener("keydown", Moving)	
+			document.getElementById("screen").innerHTML = "<h1>You ate all the sheeps</h1>";
 		}
 		return true;
            
@@ -104,7 +110,6 @@ function Map()
 		}	
 		FinishMap();
 	}
-	document.getElementById("moveUp").onclick = MoveUp;
 		
 	function MoveDown()
 	{  
@@ -150,8 +155,7 @@ function Map()
 		}
 		FinishMap();
 	}
-	document.getElementById("moveDown").onclick = MoveDown;
-		
+	
 	function MoveLeft()
 	{  
 		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
@@ -195,8 +199,7 @@ function Map()
 		}
 		FinishMap();
 	}
-	document.getElementById("moveLeft").onclick = MoveLeft;
-		
+	
 	function MoveRight()
     {  
 		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
@@ -240,9 +243,9 @@ function Map()
 		}
 		FinishMap();
     }
-	document.getElementById("moveRight").onclick = MoveRight;
-		
-	document.onkeydown = function(event)
+	
+	document.addEventListener("keydown", Moving)	
+	function Moving(event)
 	{
 		event.preventDefault();
 	    // <!-- console.log(event) -->
@@ -264,7 +267,9 @@ function Map()
 			MoveRight();
 		}
 		// <!-- console.log(FinishMap()); -->
-		}
+	}
+		
+		
 	function Reset()
 	{
 		location.reload();
