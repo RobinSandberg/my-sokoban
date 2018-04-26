@@ -1,38 +1,52 @@
-function Map()
-{
-	var boxes = document.getElementsByClassName("box");
-		
-	for(var i = 0; i < boxes.length; i++)
+	var xMax = 19;		// The map size X and Y.
+	var yMax = 16;
+	var myArrayNum = 0;
+	var player = 0;		// Players current position to be set when printing the map.
+	var playerPosY = 0;		// Players Y position set when printing the map.
+	var playerPosX = 0;	
+
+	function Map()
 	{
-		if(boxes[i].classList.contains("b"))
-		{   
-			boxes[i].classList.add("red");
+		for (var y = 0; y < yMax; y++)	//Make the div for each row.
+		{
+			var rowDiv = document.createElement('div');
+			rowDiv.id = 'row'+'y'+y;
+			rowDiv.className = 'myrow';
+	
+			for (var x = 0; x < xMax; x++)
+			{
+				// Create the inner div before appending to the body
+				var boxDiv = document.createElement('div');
+				boxDiv.id = 'y'+y+'x'+x;
+				boxDiv.className = 'box';
+					if(mapsArray[myArrayNum].mapGrid[y][x] == 'B')
+					{   
+						boxDiv.classList.add("b");
+					}
+					else if(mapsArray[myArrayNum].mapGrid[y][x] == 'W')  // Lava (Walls)
+					{
+						boxDiv.classList.add("w");
+					}	
+					else if(mapsArray[myArrayNum].mapGrid[y][x] == 'G')  // Horizontal bridges
+					{
+						boxDiv.classList.add("g");
+					}		
+					else if(mapsArray[myArrayNum].mapGrid[y][x] == 'P')  // Player
+					{
+						boxDiv.classList.add("p");
+						player = boxDiv;
+						playerPosY = y;
+						playerPosX = x;
+					}	
+					
+				// The variable rowDiv is still good... Just append to it.
+				rowDiv.appendChild(boxDiv);
+			}
+			// Then append the rowDiv with all it's boxDiv's onto the body
+			document.getElementById("mapzone").appendChild(rowDiv);
 		}
-		else if(boxes[i].classList.contains("w"))
-		{
-			boxes[i].classList.add("green");
-		}	
-		else if(boxes[i].classList.contains("g"))
-		{
-			boxes[i].classList.add("blue");
-		}	
-		else if(boxes[i].classList.contains("p"))
-		{
-			boxes[i].classList.add("yellow");
-		}	
 	}	
-}	
-		
-	var player = document.getElementById("y12x12");
-		// <!-- console.log(player) -->
-		
-	var playerPosY = 12;
-	var playerPosX = 12;
-	var nextSpot = document.getElementById("y" + playerPosY + "x" + playerPosX)
-		
-		// <!-- console.log("y" + playerPosY); -->
-		// <!-- console.log("x" + playerPosX); -->
-		
+	
 	function FinishMap()
 	{
 		var goal = document.getElementsByClassName("box g");
@@ -64,14 +78,30 @@ function Map()
 		return true;
            
 	}
-		
-	function MoveUp()
+	
+	function UpdatePosition()  // Function to update what direction the player moved.
+	{
+		if(event.key == "ArrowUp")
+		{
+			playerPosY--; 
+		}
+		else if(event.key == "ArrowDown")
+		{
+			playerPosY++; 
+		}
+		else if(event.key == "ArrowLeft")
+		{
+			playerPosX--; 
+		}
+		else if(event.key == "ArrowRight")
+		{
+			playerPosX++; 
+		}
+	}	
+	
+	function Move()
 	{  
-		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
-		nextSpot = document.getElementById("y" + (playerPosY-1) + "x" + playerPosX)
-		nextNextSpot = document.getElementById("y" + (playerPosY-2) + "x" + playerPosX)
-		// <!-- console.log(player); -->
-		if (playerPosY == 1)
+		if (!nextSpot)
 		{
 		// <!-- console.log("end of map"); -->
 		}
@@ -92,7 +122,7 @@ function Map()
 			{
 			    player.classList.remove("p");
 				nextSpot.classList.add("p");
-				playerPosY--;
+				UpdatePosition();
 				
 				nextNextSpot.classList.add("b");
 				nextSpot.classList.remove("b");
@@ -105,144 +135,11 @@ function Map()
 				// <!-- console.log(nextSpot); -->
 		    player.classList.remove("p");
 			nextSpot.classList.add("p");
-			playerPosY--;
+			UpdatePosition();
 				// <!-- console.log("y" + playerPosY); -->
 		}	
 		FinishMap();
 	}
-		
-	function MoveDown()
-	{  
-		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
-		nextSpot = document.getElementById("y" + (playerPosY+1) + "x" + playerPosX);
-		nextNextSpot = document.getElementById("y" + (playerPosY+2) + "x" + playerPosX)
-		// <!-- console.log(player); -->
-		if (playerPosY == 16)
-		{
-			// <!-- console.log("end of map"); -->
-		}
-		else if(nextSpot.classList.contains("w"))
-		{
-			// <!-- console.log("hitting the wall"); -->
-		}
-		else if(nextSpot.classList.contains("b"))
-		{
-			   // <!-- console.log("hitting the box"); -->
-			  
-			if(nextNextSpot.classList.contains("b") || nextNextSpot.classList.contains("w"))
-			{
-			    // <!-- console.log("can't move box into another box or wall"); -->
-			}
-			else
-			{
-				player.classList.remove("p");
-			    nextSpot.classList.add("p");
-				playerPosY++;
-				
-				nextNextSpot.classList.add("b");
-				nextSpot.classList.remove("b");
-				// <!-- console.log(nextNextSpot); -->
-			}  
-			   
-		}
-		else
-		{
-				// <!-- console.log(nextSpot) -->
-			player.classList.remove("p");
-			nextSpot.classList.add("p");
-			playerPosY++;
-				// <!-- console.log("y" + playerPosY) -->
-		}
-		FinishMap();
-	}
-	
-	function MoveLeft()
-	{  
-		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
-		nextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX-1));
-		nextNextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX-2))
-		// <!-- console.log(player); -->
-		if (playerPosX == 1)
-			{
-			// <!-- console.log("end of map"); -->
-			}
-		else if(nextSpot.classList.contains("w"))
-		{
-			// <!-- console.log("hitting the wall"); -->
-		}
-		else if(nextSpot.classList.contains("b"))
-		{
-			// <!-- console.log("hitting the box"); -->
-			  
-			if(nextNextSpot.classList.contains("b") || nextNextSpot.classList.contains("w"))
-			{
-				// <!-- console.log("can't move box into another box or wall"); -->
-			}
-			else
-			{
-				player.classList.remove("p");
-				nextSpot.classList.add("p");
-				playerPosX--;
-				
-				nextNextSpot.classList.add("b");
-				nextSpot.classList.remove("b");
-				// <!-- console.log(nextNextSpot); -->
-			} 
-		}
-		else{
-			
-			// <!-- console.log(nextSpot) -->
-			player.classList.remove("p");
-			nextSpot.classList.add("p");
-			playerPosX--;
-			// <!-- console.log("x" + playerPosX) -->
-		}
-		FinishMap();
-	}
-	
-	function MoveRight()
-    {  
-		player = document.getElementById("y" + playerPosY + "x" + playerPosX);
-		nextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX+1));
-		nextNextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX+2))
-		// <!-- console.log(player); -->
-		if (playerPosX == 19)
-		{
-			// <!-- console.log("end of map"); -->
-		}
-		else if(nextSpot.classList.contains("w"))
-		{
-			// <!-- console.log("hitting the wall"); -->
-		}
-		else if(nextSpot.classList.contains("b"))
-		{
-			// <!-- console.log("hitting the box"); -->
-			   
-			if(nextNextSpot.classList.contains("b") || nextNextSpot.classList.contains("w"))
-			{
-				// <!-- console.log("can't move box into another box or wall"); -->
-			}
-			else
-			{
-				player.classList.remove("p");
-				nextSpot.classList.add("p");
-				playerPosX++;
-				
-				nextNextSpot.classList.add("b");
-				nextSpot.classList.remove("b");
-				// <!-- console.log(nextNextSpot); -->
-			}
-   
-		}
-		else{
-			// <!-- console.log(nextSpot) -->
-			player.classList.remove("p");
-			nextSpot.classList.add("p");
-			playerPosX++;
-			// <!-- console.log("x" + playerPosX) -->
-		}
-		FinishMap();
-    }
 	
 	document.addEventListener("keydown", Moving)	
 	function Moving(event)
@@ -251,27 +148,66 @@ function Map()
 	    // <!-- console.log(event) -->
 	    if(event.key == "ArrowLeft")
 	    {
-			MoveLeft();
+			player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+			nextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX-1));
+			nextNextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX-2))
+			Move();
 		}
 		else if(event.key == "ArrowUp")
 	    {
-			MoveUp();
-			
+			player = document.getElementById("y" + playerPosY + "x" + playerPosX);  // current location
+			nextSpot = document.getElementById("y" + (playerPosY-1) + "x" + playerPosX)  // the spot above you
+			nextNextSpot = document.getElementById("y" + (playerPosY-2) + "x" + playerPosX) // 2 spots above you
+			Move();
 		}
 		else if(event.key == "ArrowDown")
 		{
-			MoveDown();
+			player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+			nextSpot = document.getElementById("y" + (playerPosY+1) + "x" + playerPosX);
+			nextNextSpot = document.getElementById("y" + (playerPosY+2) + "x" + playerPosX)
+			Move();
 		}
 		else if(event.key == "ArrowRight")
 		{
-			MoveRight();
+			player = document.getElementById("y" + playerPosY + "x" + playerPosX);
+			nextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX+1));
+			nextNextSpot = document.getElementById("y" + playerPosY + "x" + (playerPosX+2))
+			Move();
 		}
 		// <!-- console.log(FinishMap()); -->
 	}
-		
-		
-	function Reset()
+	
+	function NextMap()				// Button for next map.
 	{
-		location.reload();
+		if(myArrayNum == mapsArray.length -1){}
+		else
+		{
+			myArrayNum ++;
+			Reset();
+		}
+	}
+	var nextMap = document.getElementById("nextMap");	// Getting the button by Id.
+	nextMap.addEventListener("click" , NextMap);		// webpage Listen for when the button get clicked.	
+	
+	function PrevMap()
+	{
+		if(myArrayNum < 1){}
+		else
+		{
+			myArrayNum --;
+			Reset();
+		}
+	}
+    var prevMap = document.getElementById("prevMap");
+	prevMap.addEventListener("click" , PrevMap);
+	
+	function Reset()
+	{	
+		document.addEventListener("keydown", Moving)
+		document.getElementById("screen").innerHTML = "";   //Clear the pop up and game window.
+		document.getElementById("mapzone").innerHTML = "";
+		Map();
 	}
 	document.getElementById("resetMap").onclick = Reset;
+	
+	Reset();
